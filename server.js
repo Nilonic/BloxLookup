@@ -125,12 +125,18 @@ function cleanupApiKeys() {
             delete apiKeys[key];
         }
     }
+    if (global.gc) {
+        global.gc();
+      } else {
+        console.log('Garbage collection not exposed. Run with --expose-gc.');
+      }
 }
 
 // Set up periodic cleanup every 30 seconds
 setInterval(cleanupApiKeys, 30 * 1000);
 
 // Start the server
+
 app.listen(port, () => {
     debugLog(`Server running at http://localhost:${port}`, '\x1b[32m'); // Green for server start
 });

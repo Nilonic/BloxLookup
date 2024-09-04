@@ -83,6 +83,17 @@ async function fetchGameData() {
         // Clear previous game info
         gameInfoContainer.innerHTML = '';
 
+        // Determine if the game is recent, new, or hot
+        const twoWeeksAgo = new Date();
+        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+        const isRecent = game.updated && new Date(game.updated) > twoWeeksAgo;
+        const isNew = game.created && new Date(game.created) > oneMonthAgo;
+        const isHot = game.playing && game.playing > 10000;
+
         // Create and append new elements with null checks
         const title = document.createElement('h1');
         title.textContent = game.name || 'Unknown';
@@ -98,7 +109,7 @@ async function fetchGameData() {
 
         const creatorURL = document.createElement("button");
         creatorURL.innerText = "Open creator page in new tab"
-        creatorURL.addEventListener("click", () => {
+        creatorURL.addEventListener("mouseup", () => {
             if (game.creator?.type === "Group"){
                 window.open(`https://www.roblox.com/groups/${game.creator.id}`, '_blank').focus();
             }
@@ -106,10 +117,11 @@ async function fetchGameData() {
                 window.open(`https://www.roblox.com/users/${game.creator.id}/profile/`, '_blank').focus();
             }
         })
+        creatorURL.setAttribute("rel", "noopener")
         gameInfoContainer.appendChild(creatorURL);
 
         const price = document.createElement('p');
-        price.innerHTML = `<strong>Private Server Price:</strong> ${game.price ? game.price : 'Free'}`;
+        price.innerHTML = `<strong>Game Price:</strong> ${game.price ? game.price : 'Free'}`;
         gameInfoContainer.appendChild(price);
 
         const visits = document.createElement('p');
@@ -117,7 +129,7 @@ async function fetchGameData() {
         gameInfoContainer.appendChild(visits);
 
         const players = document.createElement('p');
-        players.innerHTML = `<strong>Players:</strong> ${game.playing?.toLocaleString() || '0'}`;
+        players.innerHTML = `<strong>Players:</strong> ${game.playing?.toLocaleString() || '0'} ${isHot ? "(HOT)" : ""}`;
         gameInfoContainer.appendChild(players);
 
         const genre = document.createElement('p');
@@ -125,11 +137,11 @@ async function fetchGameData() {
         gameInfoContainer.appendChild(genre);
 
         const created = document.createElement('p');
-        created.innerHTML = `<strong>Game Created:</strong> ${game.created ? new Date(game.created).toLocaleDateString() : 'Unknown'}`;
+        created.innerHTML = `<strong>Game Created:</strong> ${game.created ? new Date(game.created).toLocaleDateString() : 'Unknown'} ${isNew ? "(NEW)" : ""}`;
         gameInfoContainer.appendChild(created);
 
         const updated = document.createElement('p');
-        updated.innerHTML = `<strong>Game Updated:</strong> ${game.updated ? new Date(game.updated).toLocaleDateString() : 'Unknown'}`;
+        updated.innerHTML = `<strong>Game Updated:</strong> ${game.updated ? new Date(game.updated).toLocaleDateString() : 'Unknown'} ${isRecent ? "(RECENT)" : ""}`;
         gameInfoContainer.appendChild(updated);
 
         addRecentSearch(gameId, game.name); // Add recent search by game ID and name
@@ -172,7 +184,7 @@ function navigateTo(page) {
         // Implement navigation to home
         console.log('Navigated to Home');
     } else if (page === 'github') {
-        window.open('https://github.com/your-github-repo', '_blank');
+        window.open('https://github.com/Nilonic/BloxLookup', '_blank');
     }
 }
 

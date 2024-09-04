@@ -137,6 +137,7 @@ button:hover {
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    overflow: hidden;
 }
 
 .modal-content {
@@ -148,6 +149,14 @@ button:hover {
     border-radius: 8px;
     color: white;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content a:link{
+    color: white;
+}
+
+.modal-content a:visited{
+    color: grey;
 }
 
 .close {
