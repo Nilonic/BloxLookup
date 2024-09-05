@@ -114,6 +114,7 @@ app.get('/', (req, res) => {
 });
 
 // Cleanup function to remove expired or overused API keys
+var hasComplainedAboutGC = false;
 function cleanupApiKeys() {
     const now = Date.now();
     for (const key in apiKeys) {
@@ -128,7 +129,10 @@ function cleanupApiKeys() {
     if (global.gc) {
         global.gc();
       } else {
-        console.log('Garbage collection not exposed. Run with --expose-gc.');
+        if (!hasComplainedAboutGC){
+            console.log('Garbage collection not exposed. Run with --expose-gc.');
+            hasComplainedAboutGC = true;
+        }
       }
 }
 
