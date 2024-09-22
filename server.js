@@ -4,6 +4,14 @@ const crypto = require('crypto');
 const app = express();
 const port = 3000;
 
+console.clear();
+console.log(`   _______________________
+  /                      /
+ / BloxLookup Server V1 /
+/______________________/`);
+
+console.log();
+
 // Define the _DEBUG flag
 const _DEBUG = true; // Set to false to disable debug logging
 
@@ -17,9 +25,11 @@ function debugLog(message, colorCode = '\x1b[0m') {
 
 // Middleware to parse JSON
 app.use(express.json());
+debugLog("Starting Middleware Parser");
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+debugLog("Setting static serving");
 
 // In-memory store for API keys and their usage
 const apiKeys = {};
@@ -30,6 +40,7 @@ function generateApiKey() {
 }
 
 // Middleware to check API key for specific routes
+debugLog("Setting up Middleware Parser");
 app.use((req, res, next) => {
     // Skip API key validation for the key generation endpoint
     if (req.path === '/api/generate-key' && req.method === 'POST') {
@@ -130,17 +141,16 @@ function cleanupApiKeys() {
         global.gc();
       } else {
         if (!hasComplainedAboutGC){
-            console.log('Garbage collection not exposed. Run with --expose-gc.');
+            debugLog('Garbage collection not exposed. Run node with --expose-gc.', "\x1b[33m");
             hasComplainedAboutGC = true;
         }
       }
 }
 
 // Set up periodic cleanup every 30 seconds
+debugLog("Registering Key Cleanup script");
 setInterval(cleanupApiKeys, 30 * 1000);
 
 // Start the server
-
-app.listen(port, () => {
-    debugLog(`Server running at http://localhost:${port}`, '\x1b[32m'); // Green for server start
-});
+debugLog(`Starting Server... (http://localhost:${port})`);
+app.listen(port);

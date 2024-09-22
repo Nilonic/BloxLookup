@@ -4,6 +4,7 @@
     "node-fetch": "^3.3.2"
   },
   "scripts": {
-    "start": "nodeserver.js"
+    "start-exposed-gc": "node --expose-gc server.js",
+    "start": "node server.js"
   }
 }
