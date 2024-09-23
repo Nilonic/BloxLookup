@@ -3,17 +3,21 @@ const path = require('path');
 const crypto = require('crypto');
 const app = express();
 const port = 3000;
+const _DEBUG = true; // Set to false to disable debug logging
+var hasComplainedAboutGC = false;
 
 console.clear();
-console.log(`   _______________________
+console.clear(); // double fire to ensure a clear console
+console.log(`${String.fromCharCode(27)}[38;5;129m   _______________________
   /                      /
  / BloxLookup Server V1 /
-/______________________/`);
-
-console.log();
-
-// Define the _DEBUG flag
-const _DEBUG = true; // Set to false to disable debug logging
+/______________________/${String.fromCharCode(27)}[0m`);
+if (global.gc) {
+    debugLog("Starting with Garbage Collector Exposed");
+}
+else{
+    debugLog("Starting with Node's default Garbage Collector Settings");
+}
 
 // Utility function to log messages based on the _DEBUG flag
 function debugLog(message, colorCode = '\x1b[0m') {
@@ -125,7 +129,6 @@ app.get('/', (req, res) => {
 });
 
 // Cleanup function to remove expired or overused API keys
-var hasComplainedAboutGC = false;
 function cleanupApiKeys() {
     const now = Date.now();
     for (const key in apiKeys) {
