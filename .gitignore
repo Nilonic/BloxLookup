@@ -1,2 +1,5 @@
+# NPM/Node stuff
 package-lock.json
 node_modules/
+# from https://www.markdownguide.org/
+markdown-cheat-sheet.md
