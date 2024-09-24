@@ -168,26 +168,6 @@ function addRecentSearch(gameId, gameName) {
     recentSearchesList.appendChild(listItem);
 }
 
-// Open About modal
-function openAboutModal() {
-    document.getElementById('aboutModal').style.display = 'block';
-}
-
-// Close About modal
-function closeAboutModal() {
-    document.getElementById('aboutModal').style.display = 'none';
-}
-
-// Navigate to different pages
-function navigateTo(page) {
-    if (page === 'home') {
-        // Implement navigation to home
-        console.log('Navigated to Home');
-    } else if (page === 'github') {
-        window.open('https://github.com/Nilonic/BloxLookup', '_blank');
-    }
-}
-
 // Initialize by checking or fetching the API key when the page loads
 window.onload = async () => {
     await getApiKey();

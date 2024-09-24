@@ -80,6 +80,10 @@ button:hover {
     background-color: #7046d4;
 }
 
+button:disabled{
+    background-color: #260370;
+}
+
 /* Game Info Display */
 .game-info {
     background-color: #3d1a7a;
@@ -128,7 +132,6 @@ button:hover {
 }
 /* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
     left: 0;

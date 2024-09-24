@@ -133,6 +133,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index/index.html')); // Serve the index.html file
 });
 
+app.get('/testing', (req, res) => {
+    debugLog(`Received request to /testing`, '\x1b[34m');
+    res.sendFile(path.join(__dirname, 'public', 'Testing/index.html')); // Serve the index.html file
+});
+
 // Function to clean up expired or overused API keys
 function cleanupApiKeys() {
     const now = Date.now(); // Get current time
