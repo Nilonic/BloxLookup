@@ -1,43 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BloxLookup V1</title>
-        <link rel="stylesheet" href="./../index/styles.css">
-        <script src="./../utilities.js" defer></script>
-    </head>
-
-    <header class="header">
-        <nav class="navbar">
-            <div class="navbar-left">
-                <button onclick="location.href = location.origin">Home</button>
-                <button onclick="openAboutModal()">About</button> <!-- Modified button -->
-                <button onclick="navigateTo('github')">GitHub</button>
-            </div>
-            <div class="navbar-right">
-                <h2>BloxLookup Testing Mode</h2>
-            </div>
-        </nav>
-    </header>
-    <button> normal button </button>
-    <button disabled aria-disabled="true"> disabled button </button>
-    <h1>h1</h1>
-    <h2>h2</h2>
-    <h3>h3</h3>
-    <h4>h4</h4>
-    <h5>h5</h5>
-    <h6>h6</h6>
-    <p>p</p>
-    <input placeholder="input (default)">
-    <input type="number" placeholder="input (number)">
-    <input type="email" placeholder="input (email)">
-    <input type="search" placeholder="input (search)">
-    <input type="text" placeholder="input (text)">
-        <!-- Disclaimer -->
-    <footer class="footer">
-        <p>
-            We are not affiliated, associated, or partnered with Roblox Corporation in any way.<br>We are not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox Corporation.
-        </p>
-    </footer>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloxLookup V1</title>
+    <link rel="stylesheet" href="./../index/styles.css">
+    <script src="./../utilities.js" defer></script>
+  </head>
+  <header class="header">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <button onclick="location.href = location.origin">Home</button>
+        <button onclick="openAboutModal()">About</button>
+        <button onclick="navigateTo('github')">GitHub</button>
+      </div>
+      <div class="navbar-right">
+        <h2>BloxLookup Testing page</h2>
+      </div>
+    </nav>
+  </header>
+  <!-- basically uses all HTML tags we use in our page, as well as some features we planned, but didn't add whatsoever-->
+  <button> enabled button </button>
+  <button disabled aria-disabled="true"> disabled button </button>
+  <h1>h1</h1>
+  <h2>h2</h2>
+  <h3>h3</h3>
+  <h4>h4</h4>
+  <h5>h5</h5>
+  <h6>h6</h6>
+  <p>p</p>
+  <input type="password" placeholder="input (password)">
+  <input placeholder="input (default)">
+  <input type="number" placeholder="input (number)">
+  <input type="email" placeholder="input (email)">
+  <input type="search" placeholder="input (search)">
+  <input type="text" placeholder="input (text)">
+  <br>
+  <a href="#">a (with href)</a>
+  <br>
+  <a>a (no href)</a>
+  <br>
+  <div id="thingy">
+    <style>
+    p#thing {
+        position: absolute;
+        transition: transform 0s linear;
+        top: -24px;
+        left: -0px;
+        pointer-events: none;
+        z-index: 999999999999;
+    }
+    </style>
+    <p id="thing">This thing follows your cursor<br>it's a failed tooltip thing</p>
+    <script>
+      var thing = document.getElementById("thing");
+      // Move the element to follow the mouse exactly at the cursor
+      onmousemove = function(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        //console.log(x, y)
+        // Set the transform to position the element exactly at the cursor
+        thing.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      }
+    </script>
+  </div>
+  <!-- Disclaimer -->
+  <footer class="footer">
+    <p> We are not affiliated, associated, or partnered with Roblox Corporation in any way. <br>We are not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox Corporation. </p>
+  </footer>
 </html>
