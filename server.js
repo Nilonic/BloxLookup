@@ -17,11 +17,11 @@ console.log(`${String.fromCharCode(27)}[38;5;129m   _______________________
 /______________________/${String.fromCharCode(27)}[0m`);
 
 // Check if garbage collection (GC) is exposed and log accordingly
-if (global.gc) {
+if (global.gc) 
     debugLog("Starting with Garbage Collector Exposed");
-} else {
+else 
     debugLog("Starting with Node's default Garbage Collector Settings");
-}
+
 
 // Utility function to log debug messages if the _DEBUG flag is enabled
 function debugLog(message, colorCode = '\x1b[0m') {
@@ -51,9 +51,9 @@ function generateApiKey() {
 debugLog("Setting up Middleware Parser");
 app.use((req, res, next) => {
     // Skip API key validation for the key generation endpoint
-    if (req.path === '/api/generate-key' && req.method === 'POST') {
+    if (req.path === '/api/generate-key' && req.method === 'POST')
         return next();
-    }
+    
 
     // Validate API key for all other API routes
     if (req.path.startsWith('/api/')) {
@@ -152,9 +152,9 @@ function cleanupApiKeys() {
         }
     }
     // Run garbage collection if available
-    if (global.gc) {
+    if (global.gc) 
         global.gc(); // Explicitly invoke garbage collection
-    } else {
+     else {
         if (!hasComplainedAboutGC) { // Log a warning if GC is not exposed
             debugLog('Garbage collection not exposed. Run node with --expose-gc.', "\x1b[33m");
             hasComplainedAboutGC = true; // Set flag to prevent repeated warnings
