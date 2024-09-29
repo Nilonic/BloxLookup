@@ -3,6 +3,8 @@
 ## Notice
 We are not affiliated, associated, or partnered with Roblox Corporation in any way. We are not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox Corporation.
 
+This project is under the [MIT License](LICENSE), click the link, or go here (https://github.com/Nilonic/BloxLookup/blob/main/LICENSE) to view it
+
 ## Some stats here
 Current backend version: 1.0.0
 
