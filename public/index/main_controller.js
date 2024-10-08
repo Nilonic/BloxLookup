@@ -38,20 +38,39 @@ async function fetchGameData() {
     }
     const gameId = gameIdMatch[0];
 
+    // Get the spinner and its text elements
+    const spinner = document.getElementById('spinner');
+    const spinnerText = document.getElementById('spinner-text');
+    const gameInfoContainer = document.getElementById('gameInfo');
+
+    // Clear previous game info
+    gameInfoContainer.innerHTML = '';
+
+    
+
+    // Show the spinner at the start and set the initial text
+    spinner.style.display = 'flex'; // Use 'flex' since we are using flexbox for alignment
+    spinnerText.textContent = 'Fetching API key...';
+    
+
     try {
         const apiKey = await getApiKey();
+
+        // Update spinner text
+        spinnerText.textContent = 'Fetching universe data...';
+
         const universeResponse = await fetch(`/api/universe/${gameId}`, {
             headers: { 'api-key': apiKey }
         });
 
         if (!universeResponse.ok) {
             if (universeResponse.status === 401) {
-                // Key might be invalid; fetch a new one and retry
                 await fetchApiKey();
                 return fetchGameData(); // Retry with the new key
             }
             throw new Error('Failed to fetch universe ID.');
         }
+
         const universeData = await universeResponse.json();
         const universeId = universeData?.universeId;
 
@@ -59,42 +78,42 @@ async function fetchGameData() {
             throw new Error('Universe ID is missing.');
         }
 
+        // Update spinner text
+        spinnerText.textContent = 'Fetching game details...';
+
         const gameResponse = await fetch(`/api/game/${universeId}`, {
             headers: { 'api-key': apiKey }
         });
 
         if (!gameResponse.ok) {
             if (gameResponse.status === 401) {
-                // Key might be invalid; fetch a new one and retry
                 await fetchApiKey();
                 return fetchGameData(); // Retry with the new key
             }
             throw new Error('Failed to fetch game details.');
         }
+
         const gameData = await gameResponse.json();
         const game = gameData?.data?.[0];
+
 
         if (!game) {
             throw new Error('Game data is missing.');
         }
 
-        const gameInfoContainer = document.getElementById('gameInfo');
-        
-        // Clear previous game info
-        gameInfoContainer.innerHTML = '';
+        // Hide the spinner since the data is now fetched
+        spinner.style.display = 'none';
 
         // Determine if the game is recent, new, or hot
         const twoWeeksAgo = new Date();
         twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
         const oneMonthAgo = new Date();
         oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
         const isRecent = game.updated && new Date(game.updated) > twoWeeksAgo;
         const isNew = game.created && new Date(game.created) > oneMonthAgo;
         const isHot = game.playing && game.playing > 10000;
 
-        // Create and append new elements with null checks
+        // Populate the game info
         const title = document.createElement('h1');
         title.textContent = game.name || 'Unknown';
         gameInfoContainer.appendChild(title);
@@ -104,16 +123,16 @@ async function fetchGameData() {
         gameInfoContainer.appendChild(description);
 
         const creator = document.createElement('p');
-        creator.innerHTML = `<strong>Creator:</strong> ${game.creator?.name || 'Unknown'} (${game.creator?.type || 'Unknown'}) ${game.creator?.hasVerifiedBadge ? "(Verified)" : "" }`;
+        creator.innerHTML = `<strong>Creator:</strong> ${game.creator?.name || 'Unknown'} (${game.creator?.type || 'Unknown'}) ${game.creator?.hasVerifiedBadge ? "(Verified)" : ""}`;
         gameInfoContainer.appendChild(creator);
 
         const creatorURL = document.createElement("button");
         creatorURL.innerText = "Open creator page in new tab"
         creatorURL.addEventListener("mouseup", () => {
-            if (game.creator?.type === "Group"){
+            if (game.creator?.type === "Group") {
                 window.open(`https://www.roblox.com/groups/${game.creator.id}`, '_blank').focus();
             }
-            else if (game.creator?.type === "User"){
+            else if (game.creator?.type === "User") {
                 window.open(`https://www.roblox.com/users/${game.creator.id}/profile/`, '_blank').focus();
             }
         })
@@ -144,11 +163,13 @@ async function fetchGameData() {
         updated.innerHTML = `<strong>Game Updated:</strong> ${game.updated ? new Date(game.updated).toLocaleDateString() : 'Unknown'} ${isRecent ? "(RECENT)" : ""}`;
         gameInfoContainer.appendChild(updated);
 
-        addRecentSearch(gameId, game.name); // Add recent search by game ID and name
+        addRecentSearch(gameId, game.name); // Add the recent search
 
     } catch (error) {
-        const gameInfoContainer = document.getElementById('gameInfo');
-        gameInfoContainer.innerHTML = ''; // Clear any existing content
+        // Hide the spinner if an error occurs
+        spinner.style.display = 'none';
+
+        // Display error message
         const errorParagraph = document.createElement('p');
         errorParagraph.textContent = `Error: ${error.message}`;
         gameInfoContainer.appendChild(errorParagraph);

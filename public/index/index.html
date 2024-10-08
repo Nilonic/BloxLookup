@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BloxLookup V1</title>
     <link rel="stylesheet" href="index/styles.css">
-    <script src="index/script.js" defer></script>
+    <script src="index/main_controller.js" defer></script>
     <script src="./../utilities.js" defer></script>
+    <script src="index/search_type_stuff.js"></script>
 </head>
+
 <body>
     <!-- Header with Navigation -->
     <header class="header">
@@ -27,8 +30,23 @@
         <!-- Game Lookup Section -->
         <section class="lookup-section">
             <h1>Find Roblox Game Information</h1>
-            <input type="text" id="robloxUrl" placeholder="Enter Roblox game URL">
+            <input type="text" id="robloxUrl" placeholder="Enter Roblox game URL"><br>
+            <label for="type">Select a search type: </label>
+            <select name="type" id="type">
+                <optgroup label="Defaults">
+                    <option value="game">Game</option>
+                    <option value="user" disabled>User</option>
+                    <option value="group" disabled>Group</option>
+                    <option value="all" disabled>All</option>
+                </optgroup>
+                <optgroup label="Dev Options"></optgroup>
+            </select>
+            <br>
             <button onclick="fetchGameData()">Get Game Info</button>
+            <!-- Spinner Section -->
+            <div id="spinner" class="spinner" style="display:none;">
+                <p id="spinner-text">Loading...</p>
+            </div>
             <div id="gameInfo" class="game-info"></div>
         </section>
 
@@ -42,8 +60,11 @@
     <!-- Disclaimer -->
     <footer class="footer">
         <p>
-            We are not affiliated, associated, or partnered with Roblox Corporation in any way.<br>We are not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox Corporation.
+            We are not affiliated, associated, or partnered with Roblox Corporation in any way.<br>We are not
+            authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox
+            Corporation.
         </p>
     </footer>
 </body>
+
 </html>
