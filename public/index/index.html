@@ -36,15 +36,14 @@
             <label for="type">Select a search type: </label>
             <select name="type" id="type">
                 <optgroup label="Defaults">
-                    <option value="game">Game</option>
-                    <option value="user" disabled>User</option>
-                    <option value="group" disabled>Group</option>
-                    <option value="all" disabled>All</option>
+                    <option value="game_url">Game</option>
+                    <option value="user">User</option>  <!-- ENABLED -->
+                    <option value="group">Group</option> <!-- ENABLED -->
                 </optgroup>
                 <optgroup label="Dev Options"></optgroup>
             </select>
             <br>
-            <button onclick="fetchGameData()">Get Game Info</button>
+            <button onclick="fetchData()">Get Game Info</button>
             <!-- Spinner Section -->
             <div id="spinner" class="spinner" style="display:none;">
                 <p id="spinner-text">Loading...</p>

@@ -1,32 +1,32 @@
 {
-    "short_name": "BloxLookup",
-    "name": "BloxLookup - a Roblox Game Lookup Site",
-    "description": "BloxLookup is an open-source, free to use application that allows you to see details about your favorite games, all in a neat and easy-to-understand way. BloxLookup is currently in alpha, so expect some issues",
-    "start_url": ".",
-    "display": "standalone",
-    "theme_color": "#000000",
-    "background_color": "#1b0c3b",
-    "prefer_related_applications": false,
-    "icons": [
+  "short_name": "BloxLookup",
+  "name": "BloxLookup - a Roblox Game Lookup Site",
+  "description": "BloxLookup is an open-source, free to use application that allows you to see details about your favorite games, all in a neat and easy-to-understand way. BloxLookup is currently in alpha, so expect some issues",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#1b0c3b",
+  "prefer_related_applications": false,
+  "icons": [
+      {
+          "src": "PWA_Stuff/Roblox_2022_192.png",
+          "sizes": "192x192"
+        },
         {
-            "src": "PWA_Stuff/Roblox_2022_192.png",
-            "sizes": "192x192"
-          },
-          {
-            "src": "PWA_Stuff/Roblox_2022_512.png",
-            "sizes": "512x512"
-          },
-          {
-            "src": "PWA_Stuff/Roblox_2022_144.png",
-            "sizes": "144x144"
-          }
-    ],
-    "screenshots": [
-  {
-    "src": "PWA_Stuff/Screenshot_Main.png",
-    "form_factor": "wide",
-    "sizes": "1919x996"
-  }
+          "src": "PWA_Stuff/Roblox_2022_512.png",
+          "sizes": "512x512"
+        },
+        {
+          "src": "PWA_Stuff/Roblox_2022_144.png",
+          "sizes": "144x144"
+        }
+  ],
+  "screenshots": [
+{
+  "src": "PWA_Stuff/Screenshot_Main.png",
+  "form_factor": "wide",
+  "sizes": "1919x996"
+}
 ],
 "display_override": ["window-controls-overlay", "minimal-ui"]
 }

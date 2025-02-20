@@ -127,6 +127,55 @@ app.get('/api/game/:universeId', async (req, res) => {
     }
 });
 
+// Fetch user details based on userId
+app.get('/api/user/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    debugLog(`Received request to /api/user/${userId}`, '\x1b[34m');
+
+    const { default: fetch } = await import('node-fetch');
+    try {
+        debugLog(`Fetching user data for userId: ${userId}`, '\x1b[34m');
+        const response = await fetch(`https://users.roblox.com/v1/users/${userId}`);
+
+        if (!response.ok) {
+            debugLog(`Failed to fetch user data: ${response.status} ${response.statusText}`, '\x1b[31m');
+            throw new Error('Failed to fetch user data.');
+        }
+
+        const data = await response.json();
+        debugLog(`Successfully fetched user data for userId: ${userId}`, '\x1b[32m');
+        res.json(data);
+    } catch (error) {
+        debugLog(`Error fetching user data for userId: ${userId} - ${error.message}`, '\x1b[31m');
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Fetch group details based on groupId
+app.get('/api/group/:groupId', async (req, res) => {
+    const groupId = req.params.groupId;
+    debugLog(`Received request to /api/group/${groupId}`, '\x1b[34m');
+
+    const { default: fetch } = await import('node-fetch');
+    try {
+        debugLog(`Fetching group data for groupId: ${groupId}`, '\x1b[34m');
+        const response = await fetch(`https://groups.roblox.com/v1/groups/${groupId}`);
+
+        if (!response.ok) {
+            debugLog(`Failed to fetch group data: ${response.status} ${response.statusText}`, '\x1b[31m');
+            throw new Error('Failed to fetch group data.');
+        }
+
+        const data = await response.json();
+        debugLog(`Successfully fetched group data for groupId: ${groupId}`, '\x1b[32m');
+        res.json(data);
+    } catch (error) {
+        debugLog(`Error fetching group data for groupId: ${groupId} - ${error.message}`, '\x1b[31m');
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 // Serve index.html file when the root URL is accessed
 app.get('/', (req, res) => {
     debugLog(`Received request to /`, '\x1b[34m'); // Log root request
@@ -143,8 +192,8 @@ function cleanupApiKeys() {
     const now = Date.now(); // Get current time
     for (const key in apiKeys) {
         // Remove keys that are overused or expired
-        if (apiKeys[key].usage >= 2 || now > apiKeys[key].expiresAt) {
-            if (apiKeys[key].usage >= 2)
+        if (apiKeys[key].usage >= 15 || now > apiKeys[key].expiresAt) {
+            if (apiKeys[key].usage >= 15)
                 debugLog(`Removing overused API key: ${key}`, '\x1b[33m'); // Log key removal for overuse
             if (now > apiKeys[key].expiresAt)
                 debugLog(`Removing expired API key: ${key}`, '\x1b[33m'); // Log key removal for expiration

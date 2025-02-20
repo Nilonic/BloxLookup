@@ -1,6 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const type = document.getElementById("type"); // <select name="type" id="type">
+    const type = document.getElementById("type");
+    const input = document.getElementById("robloxUrl");
+    
     type.addEventListener("change", (ev) => {
-        console.log(ev.target.value); // Prints the selected value
+        let placeholderText;
+        switch(ev.target.value){
+            case "game_url":
+                placeholderText = "Enter Roblox game URL";
+                break;
+            case "user":
+                placeholderText = "Enter Roblox username or ID";
+                break;
+            case "group":
+                placeholderText = "Enter Roblox group ID";
+                break;
+            default:
+                placeholderText = "Enter Roblox game URL";
+                break;
+        }
+        input.setAttribute("placeholder", placeholderText);
     });
 });

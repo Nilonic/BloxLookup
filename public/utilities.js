@@ -28,6 +28,9 @@ function openAboutModal() {
     var nextParagraph = document.createElement('p');
     nextParagraph.innerHTML = 'Material Symbols here: <a href="https://fonts.google.com/icons">Google Material Symbols & Icons</a>';
 
+    var nextNextParagraph = document.createElement('p');
+    nextNextParagraph.innerHTML = "More Roblox API Mappings here: <a href='https://github.com/AntiBoomz/BTRoblox/blob/master/README.md' target='_blank'>BTRobox Readme Links</a>";
+
     // Create sub-header (h3)
     var subHeader = document.createElement('h3');
     subHeader.textContent = 'Things this server uses:';
@@ -50,6 +53,7 @@ function openAboutModal() {
     modalContent.appendChild(header);
     modalContent.appendChild(paragraph);
     modalContent.appendChild(nextParagraph);
+    modalContent.appendChild(nextNextParagraph);
     modalContent.appendChild(subHeader);
     modalContent.appendChild(ul);
     modalContent.appendChild(finalParagraph);
