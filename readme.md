@@ -1,5 +1,9 @@
 # BloxLookup Source Code
 
+## Action Statuses
+[![Dependabot Updates](https://github.com/Nilonic/BloxLookup/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Nilonic/BloxLookup/actions/workflows/dependabot/dependabot-updates)
+[![CodeQL](https://github.com/Nilonic/BloxLookup/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Nilonic/BloxLookup/actions/workflows/github-code-scanning/codeql)
+
 ## Notice
 We are not affiliated, associated, or partnered with Roblox Corporation in any way. We are not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks remain the property of the Roblox Corporation.
 
