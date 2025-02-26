@@ -92,7 +92,26 @@ async function fetchData() {
             if (!response.ok) throw new Error(`Failed to fetch ${searchType} data.`);
         }
 
-        const data = await response.json();
+        let data = await response.json();
+
+        if (searchType == "game_url"){
+            // need to do some more stuff here lmao
+            apiKey = await getApiKey(); // Get another new API key
+            let Response2 = await fetch(`/api/game/${data["universeId"]}`, {            
+                method: 'GET',
+                headers: {
+                    'api-key': apiKey
+                }
+            });
+
+            if (!Response2.ok){
+                console.error("we fucked up bad")
+            }
+            else{
+                data = await Response2.json()
+                data = data?.data?.[0];
+            }
+        }
 
         // Hide spinner
         spinner.style.display = 'none';

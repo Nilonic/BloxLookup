@@ -171,6 +171,13 @@ button:disabled{
     cursor: pointer;
 }
 
+#type{
+    border: #00000000;
+    border-radius: 10px;
+    background-color: #5936a3;
+    color: white;
+  }
+
 .close:hover,
 .close:focus {
     color: #fff;
