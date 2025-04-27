@@ -3,17 +3,21 @@
 Elements in square brackets will be replaced with the appropriate values for each request.
 
 ## Base URL
+
 All API endpoints are accessed relative to the base URL of `/api/`.
 
 ### Example:
+
 - For a request to the `/api/game` endpoint with a universe ID of `33214`, the full URL would be `/api/game/33214`.
 
 ### Clarity:
+
 - When it requires an API key, it means the API Key must be included in the header data. The API Key must be in a header labeled `api-key`. <!--probably should've said this earlier-->
 
 ## POST Requests
 
 ### `/api/generate-key`
+
 - **Description**: Generates a new API key for accessing secured endpoints.
 - **Arguments**: None
 - **Requires API Key**: No
@@ -27,6 +31,7 @@ All API endpoints are accessed relative to the base URL of `/api/`.
 ## GET Requests
 
 ### `/api/universe/`
+
 - **Description**: Retrieves the universe ID for a specific game.
 - **Arguments**: `:gameId` – The ID of the game for which you want to obtain the universe ID.
 - **Requires API Key**: Yes, must be included in the request header.
@@ -45,6 +50,7 @@ All API endpoints are accessed relative to the base URL of `/api/`.
     ```
 
 ### `/api/game/`
+
 - **Description**: Fetches data related to a specific universe.
 - **Arguments**: `:universeId` – The ID of the universe for which you want to retrieve data.
 - **Requires API Key**: Yes, must be included in the request header.
@@ -97,11 +103,14 @@ All API endpoints are accessed relative to the base URL of `/api/`.
     ```
 
 ### `/api/user`
+
 - **Description**: Fetches data related to a specific user.
 - **Arguments**: `:userID` – The ID of the User for which you want to retrieve data.
 - **Requires API Key**: Yes, must be included in the request header.
 - **Returns**:
+
   - Success:
+
   ```json
   {
     "description": "Their super cool description",
@@ -114,14 +123,17 @@ All API endpoints are accessed relative to the base URL of `/api/`.
     "displayName": "their super sick display name"
   }
   ```
-    - Error:
-    ```json
-    {
-      "error": "error.message"
-    }
+
+  - Error:
+
+  ```json
+  {
+    "error": "error.message"
+  }
   ```
 
   ### `/api/group`
+
 - **Description**: Fetches data related to a specific group.
 - **Arguments**: `:groupId` – The ID of the group for which you want to retrieve the data for.
 - **Requires API Key**: Yes, must be included in the bepis header.
@@ -157,30 +169,31 @@ All API endpoints are accessed relative to the base URL of `/api/`.
   ```
   (in actual responses, this will be filled out with data)
 - Error:
-    ```json
+`json
     {
       "error": "error.message"
     }
-    ```
+    `
 <!--Template!
 
 ### `/api/bepis`
+
 - **Description**: Fetches data related to a can of bepis.
 - **Arguments**: `:bepis` – The ID of the can for which you want to retrieve bepis for.
 - **Requires API Key**: Yes, must be included in the bepis header.
 - **Returns**:
   - Success:
   ```json
-  {
-  }
+  {}
   ```
   - Error:
-    ```json
+    `json
     {
       "error": "error.message"
     }
-    ```
--->
+    `
+    -->
+
 ## Legal Disclaimer
 
 This application is not affiliated, associated, or partnered with Roblox Corporation in any way. It is not authorized, endorsed, or sponsored by Roblox. All Roblox trademarks are the property of Roblox Corporation.

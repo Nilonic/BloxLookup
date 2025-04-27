@@ -8,25 +8,25 @@
   "background_color": "#1b0c3b",
   "prefer_related_applications": false,
   "icons": [
-      {
-          "src": "PWA_Stuff/Roblox_2022_192.png",
-          "sizes": "192x192"
-        },
-        {
-          "src": "PWA_Stuff/Roblox_2022_512.png",
-          "sizes": "512x512"
-        },
-        {
-          "src": "PWA_Stuff/Roblox_2022_144.png",
-          "sizes": "144x144"
-        }
+    {
+      "src": "PWA_Stuff/Roblox_2022_192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "PWA_Stuff/Roblox_2022_512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "PWA_Stuff/Roblox_2022_144.png",
+      "sizes": "144x144"
+    }
   ],
   "screenshots": [
-{
-  "src": "PWA_Stuff/Screenshot_Main.png",
-  "form_factor": "wide",
-  "sizes": "1919x996"
-}
-],
-"display_override": ["window-controls-overlay", "minimal-ui"]
+    {
+      "src": "PWA_Stuff/Screenshot_Main.png",
+      "form_factor": "wide",
+      "sizes": "1919x996"
+    }
+  ],
+  "display_override": ["window-controls-overlay", "minimal-ui"]
 }
