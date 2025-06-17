@@ -1,7 +1,5 @@
 # BloxLookup Source Code
 
-[click me](https://github.com/Nilonic/BloxLookup?tab=MIT-1-ov-file)
-
 ## Action Statuses
 
 [![Dependabot Updates](https://github.com/Nilonic/BloxLookup/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Nilonic/BloxLookup/actions/workflows/dependabot/dependabot-updates)
