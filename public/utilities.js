@@ -21,11 +21,6 @@ function openAboutModal() {
   var header = document.createElement("h2");
   header.textContent = "About BloxLookup";
 
-  // Create paragraph with link
-  var paragraph = document.createElement("p");
-  paragraph.innerHTML =
-    'Roblox API Mappings here: <a href="https://www.postman.com/docking-module-technologist-21992536/workspace/roblox-api-utility/collection/34024966-909e4361-d3b8-49e4-8021-5f22f940ecc5" target="_blank">Postman Collection</a>';
-
   var nextParagraph = document.createElement("p");
   nextParagraph.innerHTML =
     'Material Symbols here: <a href="https://fonts.google.com/icons">Google Material Symbols & Icons</a>';
@@ -55,7 +50,6 @@ function openAboutModal() {
   // Append elements to modalContent
   modalContent.appendChild(closeButton);
   modalContent.appendChild(header);
-  modalContent.appendChild(paragraph);
   modalContent.appendChild(nextParagraph);
   modalContent.appendChild(nextNextParagraph);
   modalContent.appendChild(subHeader);

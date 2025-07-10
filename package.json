@@ -6,5 +6,17 @@
   "scripts": {
     "start-exposed-gc": "node --expose-gc server.js",
     "start": "node server.js"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Nilonic/BloxLookup/issues"
+  },
+  "private": "true",
+  "repository": "https://github.com/Nilonic/BloxLookup/",
+  "author": {
+    "name": "Nilonic",
+    "url": "https://github.com/Nilonic/"
+  },
+  "api": "none",
+  "readme": "readme.md",
+  "license": "MIT"
 }

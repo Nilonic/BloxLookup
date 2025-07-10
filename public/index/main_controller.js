@@ -1,36 +1,5 @@
-const apiKeyStorageKey = "apiKey";
-const apiKeyExpirationKey = "apiKeyExpiration";
 const recentSearches = new Set(); // To store unique game IDs and prevent duplicates
 
-// Function to fetch a new API key
-async function fetchApiKey() {
-  try {
-    const response = await fetch("/api/generate-key", {
-      method: "POST",
-    });
-    if (!response.ok)
-      throw new Error("Failed to generate API key. %O", response);
-    const data = await response.json();
-    localStorage.setItem(apiKeyStorageKey, data.apiKey || "");
-    localStorage.setItem(apiKeyExpirationKey, Date.now() + 30 * 1000); // Set expiry to 30 seconds from now
-  } catch (error) {
-    console.error("Error fetching API key:", error.message);
-    alert("Error generating API key.");
-  }
-}
-
-// Function to get the API key from storage or fetch a new one if needed
-async function getApiKey() {
-  const storedKey = localStorage.getItem(apiKeyStorageKey);
-  const expiry = localStorage.getItem(apiKeyExpirationKey);
-
-  if (storedKey && expiry && Date.now() < expiry) {
-    return storedKey;
-  } else {
-    await fetchApiKey();
-    return localStorage.getItem(apiKeyStorageKey) || ""; // Fallback to empty string if key is not available
-  }
-}
 
 async function fetchData() {
   const url = document.getElementById("robloxUrl").value;
@@ -54,11 +23,7 @@ async function fetchData() {
   const spinner = document.getElementById("spinner");
   spinner.style.display = "flex";
 
-  let apiKey;
   try {
-    // Step 1: Request API Key
-    apiKey = await getApiKey();
-    if (!apiKey) throw new Error("Invalid API key received.");
 
     // Step 2: Determine Endpoint
     let endpoint;
@@ -72,31 +37,14 @@ async function fetchData() {
       throw new Error("Invalid search type.");
     }
 
-    // Step 3: Fetch Data with API Key in Headers
     let response = await fetch(endpoint, {
       method: "GET",
       headers: {
-        "api-key": apiKey,
       },
     });
 
-    // If the request fails due to an invalid API key, fetch a new key and retry
     if (!response.ok) {
-      if (response.status === 401) {
-        // If API key is invalid
-        console.log("API key invalid, fetching a new one...");
-        await fetchApiKey(); // Fetch a new API key
-        apiKey = await getApiKey(); // Get the new API key
-        response = await fetch(endpoint, {
-          // Retry the request with the new key
-          method: "GET",
-          headers: {
-            "api-key": apiKey,
-          },
-        });
-      }
-
-      if (!response.ok) throw new Error(`Failed to fetch ${searchType} data.`);
+      throw new Error(`Failed to fetch ${searchType} data.`);
     }
 
     let data = await response.json();
@@ -104,12 +52,9 @@ async function fetchData() {
 
     if (searchType == "game_url") {
       // need to do some more stuff here lmao
-      apiKey = await getApiKey(); // Get another new API key
       Response2 = await fetch(`/api/game/${data["universeId"]}`, {
         method: "GET",
-        headers: {
-          "api-key": apiKey,
-        },
+        headers: {},
       });
 
       if (!Response2.ok) {
@@ -162,12 +107,13 @@ async function fetchData() {
             data.description || "No description available"
           )
         );
-        gameInfoContainer.appendChild(
-          createLabeledParagraph(
-            "Source Description",
-            data.sourceDescription || "No source description available"
-          )
-        );
+
+        //var stemp = document.createElement("img")
+        //var img = await fetch(`/api/icon/${data.rootPlaceId}`)
+        //stemp.src = img
+        //gameInfoContainer.appendChild(
+        //  stemp
+        //)
         gameInfoContainer.appendChild(
           createLabeledParagraph("Creator", data.creator?.name || "Unknown")
         );
@@ -309,8 +255,3 @@ function clearContainer(container) {
     container.removeChild(container.firstChild);
   }
 }
-
-// Initialize by checking or fetching the API key when the page loads
-document.addEventListener("DOMContentLoaded", async () => {
-  await getApiKey();
-});

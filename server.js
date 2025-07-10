@@ -1,6 +1,5 @@
 const express = require("express"); // Importing Express framework
 const path = require("path"); // Importing 'path' module to handle file paths
-const crypto = require("crypto"); // Importing 'crypto' module for generating random API keys
 const app = express(); // Creating an Express app instance
 const port = 3000; // Defining the server port
 const _DEBUG = true; // Debug flag, set to false to disable debug logging
@@ -36,52 +35,6 @@ debugLog("Starting Middleware Parser");
 app.use(express.static(path.join(__dirname, "public")));
 debugLog("Setting static serving");
 
-// In-memory store for tracking API keys and their usage
-const apiKeys = {};
-
-// Function to generate a new API key using random bytes
-function generateApiKey() {
-  return crypto.randomBytes(16).toString("hex"); // Generates a 16-byte hex string
-}
-
-// Middleware to handle API key validation for protected routes
-debugLog("Setting up Middleware Parser");
-app.use((req, res, next) => {
-  // Skip API key validation for the key generation endpoint
-  if (req.path === "/api/generate-key" && req.method === "POST") return next();
-
-  // Validate API key for all other API routes
-  if (req.path.startsWith("/api/")) {
-    const apiKey = req.headers["api-key"]; // Get API key from headers
-    // Check if the API key is valid and not expired/overused
-    if (
-      !apiKey ||
-      !apiKeys[apiKey] ||
-      apiKeys[apiKey].usage >= 2 ||
-      Date.now() > apiKeys[apiKey].expiresAt
-    ) {
-      return res.status(401).json({
-        error: "Invalid or expired API key",
-      }); // Respond with 401 if invalid
-    }
-    apiKeys[apiKey].usage++; // Increment usage counter
-  }
-
-  next(); // Proceed to the next middleware/route
-});
-
-// API endpoint to generate a new API key
-app.post("/api/generate-key", (req, res) => {
-  const key = generateApiKey(); // Generate a new API key
-  apiKeys[key] = {
-    usage: 0, // Initialize usage counter
-    expiresAt: Date.now() + 30 * 1000, // Set expiration time to 30 seconds
-  };
-  debugLog(`Generated new API key: ${key}`, "\x1b[32m"); // Log key generation success
-  res.json({
-    apiKey: key,
-  }); // Respond with the new API key
-});
 
 // API endpoint to get universe data based on gameId
 app.get("/api/universe/:gameId", async (req, res) => {
@@ -194,6 +147,30 @@ app.get("/api/user/:userId", async (req, res) => {
   }
 });
 
+// app.get("/api/icon/:universeid", async (req, res) => {
+// const universeId = req.params.universeid;
+//   const url = `https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&size=512x512&format=Png&isCircular=false`
+//   try{
+//   const response = await fetch(url);
+//     if (!response.ok){
+//       debugLog(
+//         `Failed to fetch data: ${response.status} ${response.statusText}`,
+//         "\x1b[31m"
+//       );
+//       throw new Error("Failed to fetch data.");
+//     }
+// 
+//     const data = await response.json();
+//     debugLog(data);
+//     res.json(data);
+//   }
+//   catch (error){
+//     res.status(500).json({
+//       error: error.message
+//     })
+//   }
+// });
+
 // Fetch group details based on groupId
 app.get("/api/group/:groupId", async (req, res) => {
   const groupId = req.params.groupId;
@@ -242,37 +219,6 @@ app.get("/testing", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "Testing/index.html")); // Serve the index.html file
 });
 
-// Function to clean up expired or overused API keys
-function cleanupApiKeys() {
-  const now = Date.now(); // Get current time
-  for (const key in apiKeys) {
-    // Remove keys that are overused or expired
-    if (apiKeys[key].usage >= 2 || now > apiKeys[key].expiresAt) {
-      if (apiKeys[key].usage >= 2)
-        debugLog(`Removing overused API key: ${key}`, "\x1b[33m"); // Log key removal for overuse
-      if (now > apiKeys[key].expiresAt)
-        debugLog(`Removing expired API key: ${key}`, "\x1b[33m"); // Log key removal for expiration
-      delete apiKeys[key]; // Delete the API key from the store
-    }
-  }
-  // Run garbage collection if available
-  if (global.gc) global.gc(); // Explicitly invoke garbage collection
-  else {
-    if (!hasComplainedAboutGC) {
-      // Log a warning if GC is not exposed
-      debugLog(
-        "Garbage collection not exposed. Run node with --expose-gc.",
-        "\x1b[33m"
-      );
-      hasComplainedAboutGC = true; // Set flag to prevent repeated warnings
-    }
-  }
-}
-
-// Set up periodic cleanup of API keys every 30 seconds
-debugLog("Registering Key Cleanup script");
-let cleanupInterval = setInterval(cleanupApiKeys, 30 * 1000);
-
 // Start the server and log the server URL
 console.log(`Starting Server... (http://localhost:${port})`);
 app.listen(port);
@@ -286,12 +232,6 @@ function exitHandler(options, exitCode) {
 
   // Log cleanup initiation
   debugLog("Performing cleanup before exiting...", "\x1b[33m");
-
-  // Clear the periodic API key cleanup interval
-  clearInterval(cleanupInterval);
-
-  // Perform a final cleanup of API keys
-  cleanupApiKeys();
 
   // Run garbage collection one last time if available
   if (global.gc) {
