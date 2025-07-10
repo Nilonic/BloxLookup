@@ -13,9 +13,9 @@ This project is under the [MIT License](LICENSE), click the link, or go here (ht
 
 ## Some stats here
 
-Current backend version: 1.0.0
+Current backend version: 2.0.0
 
-Current frontend version: 1.0.0
+Current frontend version: 2.0.0
 
 For the API, see [API.md](API.md)
 

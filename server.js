@@ -12,7 +12,7 @@ console.clear(); // Ensuring the console is clear with a double call
 // Fancy ASCII art for server start message with specific color codes
 console.log(`${String.fromCharCode(27)}[38;5;129m   _______________________
   /                      /
- / BloxLookup Server V1 /
+ / BloxLookup Server V2 /
 /______________________/${String.fromCharCode(27)}[0m`);
 
 // Check if garbage collection (GC) is exposed and log accordingly
