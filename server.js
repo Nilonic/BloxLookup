@@ -27,21 +27,30 @@ function debugLog(message, colorCode = "\x1b[0m") {
   }
 }
 
-
-
-var RateLimit = require('express-rate-limit');
+var RateLimit = require("express-rate-limit");
 var limiter = RateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 100, // Limit each IP to 100 requests per windowMs
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message: {
-    error: "Too many requests, please try again later." // Bog standard error message, might change later, i dunno
-  }
+    error: "Too many requests, please try again later.",
+    code: 429, // HTTP status code for too many requests
+    status: "error", // Status of the response
+    description:
+      "You have exceeded the request limit for this app. Please wait a minute before trying again.",
+  },
+  // need to ignore calls to /api/*
+  skip: function (req, res) {
+    // Skip rate limiting for API endpoints
+    if (req.path.startsWith("/api/")) {
+      return true; // Skip rate limiting for API requests
+    }
+    return false; // Apply rate limiting for other requests
+  },
 });
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
-
 
 app.use(express.json());
 debugLog("Starting Middleware Parser");
@@ -49,7 +58,6 @@ debugLog("Starting Middleware Parser");
 // Middleware to serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 debugLog("Setting static serving");
-
 
 // API endpoint to get universe data based on gameId
 app.get("/api/universe/:gameId", async (req, res) => {
@@ -174,7 +182,7 @@ app.get("/api/user/:userId", async (req, res) => {
 //       );
 //       throw new Error("Failed to fetch data.");
 //     }
-// 
+//
 //     const data = await response.json();
 //     debugLog(data);
 //     res.json(data);
