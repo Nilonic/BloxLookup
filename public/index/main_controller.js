@@ -1,6 +1,5 @@
 const recentSearches = new Set(); // To store unique game IDs and prevent duplicates
 
-
 async function fetchData() {
   const url = document.getElementById("robloxUrl").value;
   const searchType = document.getElementById("type").value;
@@ -13,7 +12,7 @@ async function fetchData() {
   const idMatch = url.match(/(\d+)/);
   if (!idMatch) {
     alert(
-      "Invalid Roblox input. Please enter a valid game, user, or group ID."
+      "Invalid Roblox input. Please enter a valid game, user, or group ID.",
     );
     return;
   }
@@ -24,7 +23,6 @@ async function fetchData() {
   spinner.style.display = "flex";
 
   try {
-
     // Step 2: Determine Endpoint
     let endpoint;
     if (searchType === "game_url") {
@@ -39,8 +37,7 @@ async function fetchData() {
 
     let response = await fetch(endpoint, {
       method: "GET",
-      headers: {
-      },
+      headers: {},
     });
 
     if (!response.ok) {
@@ -97,15 +94,15 @@ async function fetchData() {
         gameInfoContainer.appendChild(title);
 
         gameInfoContainer.appendChild(
-          createButtonWithURL("Join game", `roblox://placeid=${data.id}`)
+          createButtonWithURL("Join game", `roblox://placeid=${data.id}`),
         );
 
         // Description, Creator, Visits, Max Players, Created, Updated
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Description",
-            data.description || "No description available"
-          )
+            data.description || "No description available",
+          ),
         );
 
         //var stemp = document.createElement("img")
@@ -115,42 +112,42 @@ async function fetchData() {
         //  stemp
         //)
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Creator", data.creator?.name || "Unknown")
+          createLabeledParagraph("Creator", data.creator?.name || "Unknown"),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Visits",
-            data.visits != null ? data.visits.toLocaleString() : "N/A"
-          )
+            data.visits != null ? data.visits.toLocaleString() : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Playing",
-            data.playing != null ? data.playing.toLocaleString() : "N/A"
-          )
+            data.playing != null ? data.playing.toLocaleString() : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Creator",
             data.creator.name != null
               ? data.creator.name.toLocaleString()
-              : "N/A"
-          )
+              : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Max Players", data.maxPlayers || "N/A")
+          createLabeledParagraph("Max Players", data.maxPlayers || "N/A"),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Created",
-            data.created ? new Date(data.created).toLocaleDateString() : "N/A"
-          )
+            data.created ? new Date(data.created).toLocaleDateString() : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Updated",
-            data.updated ? new Date(data.updated).toLocaleDateString() : "N/A"
-          )
+            data.updated ? new Date(data.updated).toLocaleDateString() : "N/A",
+          ),
         );
       } else if (searchType === "user") {
         const title = document.createElement("h1");
@@ -158,19 +155,19 @@ async function fetchData() {
         gameInfoContainer.appendChild(title);
 
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Display Name", data.displayName || "N/A")
+          createLabeledParagraph("Display Name", data.displayName || "N/A"),
         );
         gameInfoContainer.appendChild(
-          createLabeledParagraph("User ID", data.id)
+          createLabeledParagraph("User ID", data.id),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Created",
-            data.created ? new Date(data.created).toLocaleDateString() : "N/A"
-          )
+            data.created ? new Date(data.created).toLocaleDateString() : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Is Banned", data.isBanned ? "Yes" : "No")
+          createLabeledParagraph("Is Banned", data.isBanned ? "Yes" : "No"),
         );
       } else if (searchType === "group") {
         const title = document.createElement("h1");
@@ -180,26 +177,26 @@ async function fetchData() {
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Description",
-            data.description || "No description available"
-          )
+            data.description || "No description available",
+          ),
         );
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Group ID", data.id)
+          createLabeledParagraph("Group ID", data.id),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Owner",
-            data.owner ? `${data.owner.username} (${data.owner.id})` : "N/A"
-          )
+            data.owner ? `${data.owner.username} (${data.owner.id})` : "N/A",
+          ),
         );
         gameInfoContainer.appendChild(
-          createLabeledParagraph("Member Count", data.memberCount || "N/A")
+          createLabeledParagraph("Member Count", data.memberCount || "N/A"),
         );
         gameInfoContainer.appendChild(
           createLabeledParagraph(
             "Created",
-            data.created ? new Date(data.created).toLocaleDateString() : "N/A"
-          )
+            data.created ? new Date(data.created).toLocaleDateString() : "N/A",
+          ),
         );
       }
     } catch (error) {

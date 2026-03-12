@@ -89,7 +89,6 @@ All API endpoints are accessed relative to the base URL of `/api/`.
 - **Description**: Fetches data related to a specific user.
 - **Arguments**: `:userID` – The ID of the User for which you want to retrieve data.
 - **Returns**:
-
   - Success:
 
   ```json
@@ -162,15 +161,17 @@ All API endpoints are accessed relative to the base URL of `/api/`.
 - **Arguments**: `:bepis` – The ID of the can for which you want to retrieve bepis for.
 - **Returns**:
   - Success:
+
   ```json
   {}
   ```
+
   - Error:
     `json
-    {
-      "error": "error.message"
-    }
-    `
+{
+  "error": "error.message"
+}
+`
     -->
 
 ## Legal Disclaimer

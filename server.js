@@ -68,14 +68,14 @@ app.get("/api/universe/:gameId", async (req, res) => {
   try {
     debugLog(`Fetching universe data for gameId: ${gameId}`, "\x1b[34m"); // Log data fetch attempt
     const response = await fetch(
-      `https://apis.roblox.com/universes/v1/places/${gameId}/universe`
+      `https://apis.roblox.com/universes/v1/places/${gameId}/universe`,
     ); // Fetch universe data
 
     if (!response.ok) {
       // Check for a successful response
       debugLog(
         `Failed to fetch universe data: ${response.status} ${response.statusText}`,
-        "\x1b[31m"
+        "\x1b[31m",
       ); // Log error
       throw new Error("Network response was not ok");
     }
@@ -83,13 +83,13 @@ app.get("/api/universe/:gameId", async (req, res) => {
     const data = await response.json(); // Parse the JSON response
     debugLog(
       `Successfully fetched universe data for gameId: ${gameId}`,
-      "\x1b[32m"
+      "\x1b[32m",
     ); // Log success
     res.json(data); // Respond with the fetched data
   } catch (error) {
     debugLog(
       `Error fetching universe data for gameId: ${gameId} - ${error.message}`,
-      "\x1b[31m"
+      "\x1b[31m",
     ); // Log fetch error
     res.status(500).json({
       error: error.message,
@@ -106,14 +106,14 @@ app.get("/api/game/:universeId", async (req, res) => {
   try {
     debugLog(`Fetching game data for universeId: ${universeId}`, "\x1b[34m"); // Log data fetch attempt
     const response = await fetch(
-      `https://games.roblox.com/v1/games?universeIds=${universeId}`
+      `https://games.roblox.com/v1/games?universeIds=${universeId}`,
     ); // Fetch game data
 
     if (!response.ok) {
       // Check for a successful response
       debugLog(
         `Failed to fetch game data: ${response.status} ${response.statusText}`,
-        "\x1b[31m"
+        "\x1b[31m",
       ); // Log error
       throw new Error("Network response was not ok");
     }
@@ -121,13 +121,13 @@ app.get("/api/game/:universeId", async (req, res) => {
     const data = await response.json(); // Parse the JSON response
     debugLog(
       `Successfully fetched game data for universeId: ${universeId}`,
-      "\x1b[32m"
+      "\x1b[32m",
     ); // Log success
     res.json(data); // Respond with the fetched data
   } catch (error) {
     debugLog(
       `Error fetching game data for universeId: ${universeId} - ${error.message}`,
-      "\x1b[31m"
+      "\x1b[31m",
     ); // Log fetch error
     res.status(500).json({
       error: error.message,
@@ -148,7 +148,7 @@ app.get("/api/user/:userId", async (req, res) => {
     if (!response.ok) {
       debugLog(
         `Failed to fetch user data: ${response.status} ${response.statusText}`,
-        "\x1b[31m"
+        "\x1b[31m",
       );
       throw new Error("Failed to fetch user data.");
     }
@@ -156,13 +156,13 @@ app.get("/api/user/:userId", async (req, res) => {
     const data = await response.json();
     debugLog(
       `Successfully fetched user data for userId: ${userId}`,
-      "\x1b[32m"
+      "\x1b[32m",
     );
     res.json(data);
   } catch (error) {
     debugLog(
       `Error fetching user data for userId: ${userId} - ${error.message}`,
-      "\x1b[31m"
+      "\x1b[31m",
     );
     res.status(500).json({
       error: error.message,
@@ -203,13 +203,13 @@ app.get("/api/group/:groupId", async (req, res) => {
   try {
     debugLog(`Fetching group data for groupId: ${groupId}`, "\x1b[34m");
     const response = await fetch(
-      `https://groups.roblox.com/v1/groups/${groupId}`
+      `https://groups.roblox.com/v1/groups/${groupId}`,
     );
 
     if (!response.ok) {
       debugLog(
         `Failed to fetch group data: ${response.status} ${response.statusText}`,
-        "\x1b[31m"
+        "\x1b[31m",
       );
       throw new Error("Failed to fetch group data.");
     }
@@ -217,13 +217,13 @@ app.get("/api/group/:groupId", async (req, res) => {
     const data = await response.json();
     debugLog(
       `Successfully fetched group data for groupId: ${groupId}`,
-      "\x1b[32m"
+      "\x1b[32m",
     );
     res.json(data);
   } catch (error) {
     debugLog(
       `Error fetching group data for groupId: ${groupId} - ${error.message}`,
-      "\x1b[31m"
+      "\x1b[31m",
     );
     res.status(500).json({
       error: error.message,
@@ -276,29 +276,29 @@ process.on(
   exitHandler.bind(null, {
     exit: true,
     noPrint: true,
-  })
+  }),
 );
 process.on(
   "SIGINT",
   exitHandler.bind(null, {
     exit: true,
-  })
+  }),
 );
 process.on(
   "SIGUSR1",
   exitHandler.bind(null, {
     exit: true,
-  })
+  }),
 );
 process.on(
   "SIGUSR2",
   exitHandler.bind(null, {
     exit: true,
-  })
+  }),
 );
 process.on(
   "uncaughtException",
   exitHandler.bind(null, {
     exit: true,
-  })
+  }),
 );
